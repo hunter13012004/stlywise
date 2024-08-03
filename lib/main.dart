@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => GetMaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: Colors.grey.shade100),
         debugShowCheckedModeBanner: false,
-        home: Startpage(),
+        home: AuthPage(),
       ),
     );
   }

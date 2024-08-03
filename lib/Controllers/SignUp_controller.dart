@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecommmerce/Models/User_model.dart';
 import 'package:ecommmerce/Pages/Home/Home.dart';
 import 'package:ecommmerce/Pages/Login/CompleteProfile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,6 +13,8 @@ class SignupController extends GetxController {
   final TextEditingController cpasscontroller = TextEditingController();
   final TextEditingController firstnamecontroller = TextEditingController();
   final TextEditingController secondnamecontroller = TextEditingController();
+  final TextEditingController phonecontroller = TextEditingController();
+  final TextEditingController agecontroller = TextEditingController();
 
   XFile? pickedImaged;
 
@@ -41,13 +40,18 @@ class SignupController extends GetxController {
     }
   }
 
-  void registerNewUser(
-      {required String email, required String password}) async {
+  void registerNewUser({
+    required String email,
+    required String password,
+  }) async {
     UserCredential? credential;
 
     try {
       credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+
+      final UserModel usermodel = UserModel(
+          FirstName: '', LastName: '', Email: emailcontroller.text.trim());
 
       DocumentSnapshot userdoc = await FirebaseFirestore.instance
           .collection('users')
@@ -57,10 +61,7 @@ class SignupController extends GetxController {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(credential.user!.uid)
-            .set({
-          'email': email,
-          'createdAt': DateTime.now(),
-        });
+            .set(usermodel.toMap());
 
         Get.off(CompleteprofileScreen());
       }
@@ -75,13 +76,18 @@ class SignupController extends GetxController {
     try {
       User? user = FirebaseAuth.instance.currentUser;
 
+      UserModel userModel = UserModel(
+        FirstName: firstnamecontroller.text.trim(),
+        LastName: secondnamecontroller.text.trim(),
+        phone: phonecontroller.text.trim(),
+        age: agecontroller.text.trim(),
+      );
+
       await FirebaseFirestore.instance
           .collection('users')
           .doc(user!.uid)
-          .update({
-        'First Name': firstnamecontroller.text.trim(),
-        'Last Name': secondnamecontroller.text.trim(),
-      });
+          .set(userModel.toMap());
+
       if (firstnamecontroller.text.trim().isNotEmpty ||
           secondnamecontroller.text.trim().isNotEmpty) {
         Get.offAll(HomePage());

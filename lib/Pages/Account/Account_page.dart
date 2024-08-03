@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommmerce/Controllers/Account_Page_controller.dart';
-import 'package:ecommmerce/Models/User_model.dart';
 import 'package:ecommmerce/Pages/Account/Settings_Page/Settings_Page.dart';
 import 'package:ecommmerce/Pages/Orders/orders_page.dart';
 import 'package:ecommmerce/Widgets/AccountPage_widget/CustomButton_widget.dart';
@@ -38,7 +37,6 @@ class _AccountPageState extends State<AccountPage> {
               .doc(FirebaseAuth.instance.currentUser!.uid)
               .snapshots(),
           builder: (context, snapshot) {
-            final userProfile = UserModel.fromDocument(snapshot.data!);
             return Container(
               child: SingleChildScrollView(
                 child: Column(
@@ -68,8 +66,7 @@ class _AccountPageState extends State<AccountPage> {
                             Row(
                               children: [
                                 Text(
-                                  userProfile.FirstName! +
-                                      userProfile.LastName!,
+                                  'harsh',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18.sp,

@@ -14,17 +14,25 @@ class CompleteprofileScreen extends StatefulWidget {
 
 class _CompleteprofileScreenState extends State<CompleteprofileScreen> {
   final SignupController signupcontroller = Get.put(SignupController());
-
+  String selectedoption = 'male';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: Colors.blue,
       body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15.w),
         height: MediaQuery.of(context).size.height.h,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(
+                'Complete Profile',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 26.sp,
+                    color: Colors.white),
+              ),
               // CircleAvatar to display the profile image
 
               SizedBox(
@@ -50,7 +58,72 @@ class _CompleteprofileScreenState extends State<CompleteprofileScreen> {
               SizedBox(
                 height: 20.h,
               ),
-              // Complete Button
+              LoginFeildsWidget(
+                  Labeltext: 'Phone',
+                  controller: signupcontroller.phonecontroller,
+                  icons: Icon(Icons.phone),
+                  Obscure: false),
+              SizedBox(
+                height: 20.h,
+              ),
+
+              Container(
+                height: 50.h,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Radio(
+                            activeColor: Colors.white,
+                            value: 'male',
+                            groupValue: selectedoption,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedoption = value!;
+                              });
+                            }),
+                        Text(
+                          'Male',
+                          style: TextStyle(
+                              color: selectedoption == 'male'
+                                  ? Colors.white
+                                  : Colors.black),
+                        ),
+                        Radio(
+                            activeColor: Colors.white,
+                            value: 'female',
+                            groupValue: selectedoption,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedoption = value!;
+                              });
+                            }),
+                        Text(
+                          'Female',
+                          style: TextStyle(
+                              color: selectedoption == 'female'
+                                  ? Colors.white
+                                  : Colors.black),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: 50.w,
+                          child: TextField(
+                            decoration: InputDecoration(hintText: 'Age'),
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+
+              // Complete
+
               LoginButtonWidget(
                 ontap: () {
                   signupcontroller.updateProfile();
