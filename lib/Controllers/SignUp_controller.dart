@@ -1,13 +1,28 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommmerce/Pages/Home/Home.dart';
+import 'package:ecommmerce/Pages/Login/CompleteProfile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignupController extends GetxController {
   final TextEditingController emailcontroller = TextEditingController();
   final TextEditingController passcontroller = TextEditingController();
   final TextEditingController cpasscontroller = TextEditingController();
+  final TextEditingController firstnamecontroller = TextEditingController();
+  final TextEditingController secondnamecontroller = TextEditingController();
+
+  XFile? pickedImaged;
+
+  void pickImage(ImageSource image) async {
+    final XFile? imagefile = await ImagePicker().pickImage(source: image);
+    pickedImaged = imagefile;
+  }
 
   void CheckValues() {
     String email = emailcontroller.text.trim();
@@ -42,15 +57,38 @@ class SignupController extends GetxController {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(credential.user!.uid)
-            .set({'email': email, 'createdAt': DateTime.now()});
+            .set({
+          'email': email,
+          'createdAt': DateTime.now(),
+        });
 
-        Get.off(HomePage());
+        Get.off(CompleteprofileScreen());
       }
     } catch (e) {
       Get.snackbar('Error', e.toString());
     }
 
     // ignore: unnecessary_null_comparison
+  }
+
+  void updateProfile() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .update({
+        'First Name': firstnamecontroller.text.trim(),
+        'Last Name': secondnamecontroller.text.trim(),
+      });
+      if (firstnamecontroller.text.trim().isNotEmpty ||
+          secondnamecontroller.text.trim().isNotEmpty) {
+        Get.offAll(HomePage());
+      } else {
+        return print('error');
+      }
+    } catch (e) {}
   }
 
   String? Function(String?) validateEmail() {

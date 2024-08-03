@@ -1,4 +1,6 @@
 import 'package:ecommmerce/Pages/Auth/Auth.dart';
+import 'package:ecommmerce/Pages/Login/CompleteProfile_screen.dart';
+import 'package:ecommmerce/Pages/Login/StartPage.dart';
 import 'package:ecommmerce/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => GetMaterialApp(
         theme: ThemeData(scaffoldBackgroundColor: Colors.grey.shade100),
         debugShowCheckedModeBanner: false,
-        home: AuthPage(),
+        home: Startpage(),
       ),
     );
   }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:http/http.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -14,7 +13,6 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  @override
   var productcontroller = Get.put(ProductApiController());
   Widget build(BuildContext context) {
     return Scaffold(
