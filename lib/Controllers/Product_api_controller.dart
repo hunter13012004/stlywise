@@ -12,12 +12,23 @@ class ProductApiController extends GetxController {
   List<productModel> cartList = <productModel>[].obs;
   int counter = 1;
   int intialamount = 0;
+  var productsByBrand = <String, List<productModel>>{}.obs;
 
   void fetchData() async {
     var allProducts = await ApiService().fetchProducts();
 
     productsList.addAll(allProducts);
     update();
+  }
+
+  void groupProductsByBrand() {
+    productsByBrand.clear();
+    for (var product in productsList) {
+      if (!productsByBrand.containsKey(product.brand)) {
+        productsByBrand[product.brand!] = [];
+      }
+      productsByBrand[product.brand]!.add(product);
+    }
   }
 
   void addtocart(productModel product, BuildContext context) {

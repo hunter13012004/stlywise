@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage> {
                               height: 5.h,
                             ),
                             Text(
-                              porductController.productsList[index].title!,
+                              porductController.productsList[index].brand!,
                               style: TextStyle(fontSize: 14.sp),
                             ),
                           ],
@@ -223,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: porductController.productsList.length,
+                    itemCount: 5,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -236,7 +236,7 @@ class _HomePageState extends State<HomePage> {
                           child: Container(
                             width: 200.w,
                             decoration: BoxDecoration(
-                                color: Colors.white30,
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(12)),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,38 +244,27 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Center(
                                   child: Container(
+                                    color: Colors.white,
                                     height: 100.h,
                                     child: Image.network(porductController
-                                        .productsList[index].image!),
+                                        .productsList[index].brandimage!),
                                   ),
                                 ),
                                 SizedBox(
                                   height: 8.h,
                                 ),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
                                       porductController
-                                          .productsList[index].title!,
+                                          .productsList[index].brand!,
                                       style: TextStyle(
-                                          fontSize: 14.sp,
+                                          fontSize: 16.sp,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ],
                                 ),
-                                Text(
-                                  porductController
-                                      .productsList[index].description!,
-                                  style: TextStyle(
-                                      fontSize: 10.sp,
-                                      color: Colors.grey.shade500,
-                                      fontWeight: FontWeight.w200),
-                                ),
-                                SizedBox(
-                                  height: 5.h,
-                                ),
-                                Text(
-                                    "Rs.${porductController.productsList[index].price!}")
                               ],
                             ),
                           ),
