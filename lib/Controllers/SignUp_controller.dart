@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommmerce/Pages/Home/Home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,13 +29,28 @@ class SignupController extends GetxController {
   void registerNewUser(
       {required String email, required String password}) async {
     UserCredential? credential;
-    credential = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password);
+
+    try {
+      credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      DocumentSnapshot userdoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(credential.user!.uid)
+          .get();
+      if (!userdoc.exists) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(credential.user!.uid)
+            .set({'email': email, 'createdAt': DateTime.now()});
+
+        Get.off(HomePage());
+      }
+    } catch (e) {
+      Get.snackbar('Error', e.toString());
+    }
 
     // ignore: unnecessary_null_comparison
-    if (credential != null) {
-      Get.off(HomePage());
-    }
   }
 
   String? Function(String?) validateEmail() {

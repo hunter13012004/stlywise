@@ -1,22 +1,48 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommmerce/Pages/Home/Home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  final TextEditingController emailcontroller = TextEditingController();
-  final TextEditingController passcontroller = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  void LogUserIn() async {
-    UserCredential? credential;
-    String email = emailcontroller.text.trim();
-    String password = passcontroller.text.trim();
-    credential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
-    // ignore: unnecessary_null_comparison
-    if (credential != null) {
-      print('user Successfuly Loged In');
-      Get.offAll(HomePage());
+  void logUserIn() async {
+    final String email = emailController.text.trim();
+    final String password = passwordController.text.trim();
+
+    try {
+      // Authenticate user
+      UserCredential credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      // Check if user document exists
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(credential.user!.uid)
+          .get();
+
+      if (!userDoc.exists) {
+        // Create a new user document if it doesn't exist
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(credential.user!.uid)
+            .set({
+          'email': email,
+          'createdAt': Timestamp.now(), // Use Timestamp instead of DateTime
+        });
+      }
+
+      // Navigate to HomePage
+      Get.offAll(() => HomePage());
+    } catch (e) {
+      // Handle errors (e.g., authentication errors, network issues)
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+      );
     }
   }
 
@@ -34,7 +60,7 @@ class LoginController extends GetxController {
   String? Function(String?) validatePassword() {
     return (value) {
       if (value == null || value.isEmpty) {
-        return 'password cannot be empty';
+        return 'Password cannot be empty';
       }
       return null;
     };

@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                           validator: logincontroller.validateEmail(),
                           Obscure: false,
                           Labeltext: 'Email',
-                          controller: logincontroller.emailcontroller,
+                          controller: logincontroller.emailController,
                           icons: Icon(Icons.person),
                         ),
                         SizedBox(
@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                           validator: logincontroller.validatePassword(),
                           Obscure: true,
                           Labeltext: 'Password',
-                          controller: logincontroller.passcontroller,
+                          controller: logincontroller.passwordController,
                           icons: Icon(Icons.lock),
                         ),
                         Padding(
@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                         LoginButtonWidget(
                           ontap: () {
                             if (formkey.currentState!.validate()) {
-                              logincontroller.LogUserIn();
+                              logincontroller.logUserIn();
                             } else {
                               print('error Logging in');
                             }
