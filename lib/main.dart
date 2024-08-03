@@ -1,8 +1,4 @@
-import 'package:ecommmerce/Pages/Account/Account_page.dart';
 import 'package:ecommmerce/Pages/Auth/Auth.dart';
-import 'package:ecommmerce/Pages/Home/Home.dart';
-import 'package:ecommmerce/Pages/Login/Login_Screen.dart';
-import 'package:ecommmerce/Pages/Login/SignUp_Screen.dart';
 import 'package:ecommmerce/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

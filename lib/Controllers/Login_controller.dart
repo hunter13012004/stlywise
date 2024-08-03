@@ -19,4 +19,24 @@ class LoginController extends GetxController {
       Get.offAll(HomePage());
     }
   }
+
+  String? Function(String?) validateEmail() {
+    return (value) {
+      if (value == null || value.isEmpty) {
+        return 'Email cannot be empty';
+      } else if (!GetUtils.isEmail(value)) {
+        return 'Please enter a valid email address';
+      }
+      return null;
+    };
+  }
+
+  String? Function(String?) validatePassword() {
+    return (value) {
+      if (value == null || value.isEmpty) {
+        return 'password cannot be empty';
+      }
+      return null;
+    };
+  }
 }

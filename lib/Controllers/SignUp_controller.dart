@@ -36,4 +36,37 @@ class SignupController extends GetxController {
       Get.off(HomePage());
     }
   }
+
+  String? Function(String?) validateEmail() {
+    return (value) {
+      if (value == null || value.isEmpty) {
+        return 'Email cannot be empty';
+      } else if (!GetUtils.isEmail(value)) {
+        return 'Please enter a valid email address';
+      } else if (!value.contains('@gmail.com')) {
+        return 'Invalid Email address';
+      }
+      return null;
+    };
+  }
+
+  String? Function(String?) validatepassword() {
+    return (value) {
+      if (value == null || value.isEmpty) {
+        return 'password cannot be empty';
+      } else if (value.length <= 6) {
+        return ' password should be more than 6 words';
+      }
+      return null;
+    };
+  }
+
+  String? Function(String?) validateConfirmpassword() {
+    return (value) {
+      if (value != passcontroller.text.trim()) {
+        return ' passwords do not match ';
+      }
+      return null;
+    };
+  }
 }

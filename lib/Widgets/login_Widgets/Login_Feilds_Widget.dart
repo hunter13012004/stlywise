@@ -23,8 +23,6 @@ class LoginFeildsWidget extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             gradient: LinearGradient(colors: [Colors.white70, Colors.white24])),
-        height: 50.h,
-        width: double.maxFinite,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextFormField(
